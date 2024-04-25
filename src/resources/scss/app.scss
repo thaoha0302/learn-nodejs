@@ -1,0 +1,16 @@
+@import "variables";
+
+header {
+  background: $black;
+  color: $white;
+  padding: 15px;
+}
+
+footer {
+  background: $white;
+  color: $black;
+}
+
+h1 {
+  font-size: 30px;
+}
