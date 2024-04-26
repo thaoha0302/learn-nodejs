@@ -5,7 +5,20 @@ class NewsController {
   index(req, res, next) {
     News.find({})
       .then((data) => res.json(data))
-      // .then((data) => res.render('news', {data}))
+      .catch(next);
+  }
+
+  // [GET] /news/store
+  showStore(req, res, next) {
+    News.findWithDeleted({ deleted: true })
+      .then((data) => res.json(data))
+      .catch(next);
+  }
+
+  // [PATCH] /news/:_id/restore
+  restore(req, res, next) {
+    News.restore({ _id: req.params._id })
+      .then(() => res.status(200).send({ message: "Restore successfully" }))
       .catch(next);
   }
 
@@ -34,6 +47,13 @@ class NewsController {
 
   // [DELETE] /news/:_id
   delete(req, res, next) {
+    News.delete({ _id: req.params._id })
+      .then(() => res.status(200).send({ message: "Delete successfully" }))
+      .catch(next);
+  }
+
+  // [DELETE] /news/:_id/force
+  force(req, res, next) {
     News.deleteOne({ _id: req.params._id })
       .then(() => res.status(200).send({ message: "Delete successfully" }))
       .catch(next);
